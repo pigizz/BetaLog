@@ -35,7 +35,10 @@ export default function Login() {
       <section className="relative overflow-hidden bg-moss-dark px-8 py-10 text-lichen sm:px-12 lg:py-14">
         <Topo className="absolute inset-0 h-full w-full text-tea" />
         <div className="relative flex h-full flex-col">
-          <p className="font-wide text-2xl">BetaLog</p>
+          <p className="flex items-center gap-3 font-wide text-2xl">
+            <img src="/favicon.svg" alt="" className="h-10 w-10 rounded-[10px] ring-1 ring-tea/40" />
+            BetaLog
+          </p>
 
           <Route className="mx-auto my-8 hidden h-[44vh] max-h-[420px] lg:block" />
 
