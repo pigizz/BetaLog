@@ -1,3 +1,5 @@
+![BetaLog](logo/betalog-logo.svg)
+
 # BetaLog 🧗
 
 **A climbing journal that tracks your progress and uses AI to analyse your climbing videos.**
@@ -23,7 +25,7 @@ Most climbers track progress in their heads, scattered phone notes, or not at al
 ## Features
 
 ### Journal
-- [ ] Log sessions (date, gym, duration, energy level)
+- [x] Log sessions (date, gym, duration, energy level)
 - [ ] Log climbs per session (grade, style, attempts, sent or not)
 - [ ] Add personal notes to each climb
 - [ ] Browse and filter climbing history
@@ -48,10 +50,10 @@ Most climbers track progress in their heads, scattered phone notes, or not at al
 |---|---|
 | Frontend | React, Vite, Tailwind CSS, Recharts |
 | Backend | Node.js, Express |
-| Database | PostgreSQL |
+| Database | PostgreSQL (Supabase) |
 | AI | MediaPipe Pose, vision-capable LLM API |
 | Testing | Jest |
-| Deployment | Vercel |
+| Deployment | Vercel, Render |
 
 *Stack may change as the project develops.*
 
@@ -71,7 +73,42 @@ Progress is tracked on the [project board](#).
 
 ## Getting Started
 
-*Setup instructions coming soon.*
+### Prerequisites
+- Node.js 20+
+- A free [Supabase](https://supabase.com) project
+
+### 1. Database
+In your Supabase project, open **SQL Editor** and run `database/schema.sql`.
+
+### 2. Backend
+```bash
+cd server
+cp .env.example .env   # add your Supabase URL and anon key
+npm install
+npm run dev            # http://localhost:3000
+```
+
+### 3. Frontend
+```bash
+cd client
+cp .env.example .env   # add your Supabase URL and anon key
+npm install
+npm run dev            # http://localhost:5173
+```
+
+### Tests
+```bash
+cd server && npm test
+```
+
+## Project Structure
+```
+betalog/
+├── client/      React + Vite frontend
+├── server/      Express API
+├── database/    SQL schema
+└── logo/        Logo files
+```
 
 ---
 
