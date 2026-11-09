@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
-import Topo from '../components/Topo'
-import Route from '../components/Route'
 
 export default function Login() {
   const [mode, setMode] = useState('login')
@@ -30,33 +28,12 @@ export default function Login() {
     'mt-1.5 w-full rounded-lg border-2 border-rock/15 bg-white px-4 py-3 text-rock placeholder:text-rock/40 transition-colors focus:border-moss focus:outline-none'
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
-      {/* The wall */}
-      <section className="relative overflow-hidden bg-moss-dark px-8 py-10 text-lichen sm:px-12 lg:py-14">
-        <Topo className="absolute inset-0 h-full w-full text-tea" />
-        <div className="relative flex h-full flex-col">
-          <p className="flex items-center gap-3 font-wide text-2xl">
-            <img src="/favicon.svg" alt="" className="h-10 w-10 rounded-[10px] ring-1 ring-tea/40" />
-            BetaLog
-          </p>
+    <div className="flex min-h-screen items-center justify-center px-6 py-12">
+      <main className="w-full max-w-sm">
+        <img src="/logo.png" alt="BetaLog" className="mx-auto mb-10 h-auto w-60" />
 
-          <Route className="mx-auto my-8 hidden h-[44vh] max-h-[420px] lg:block" />
-
-          <div className="mt-auto max-w-md pt-10 lg:pt-0">
-            <h1 className="font-wide text-4xl leading-[1.05] sm:text-5xl">
-              Every send starts with the beta.
-            </h1>
-            <p className="mt-4 max-w-sm text-lg leading-relaxed text-lichen/80">
-              Log your sessions, watch your grades climb, and learn from every fall.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* The form */}
-      <section className="flex items-center justify-center px-6 py-12 sm:px-12">
-        <div className="w-full max-w-sm">
-          <h2 className="font-wide text-3xl">{isLogin ? 'Welcome back' : 'Start your log'}</h2>
+        <div className="rounded-2xl bg-white/70 p-7 ring-1 ring-rock/10">
+          <h1 className="font-wide text-3xl">{isLogin ? 'Welcome back' : 'Start your log'}</h1>
           <p className="mt-2 text-rock/70">
             {isLogin ? 'Log in to pick up where you left off.' : 'Create an account to track your climbing.'}
           </p>
@@ -105,7 +82,7 @@ export default function Login() {
             </button>
           </p>
         </div>
-      </section>
+      </main>
     </div>
   )
 }

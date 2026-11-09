@@ -1,4 +1,4 @@
-![BetaLog](logo/betalog-logo.svg)
+<img src="logo/betalog-logo.png" alt="BetaLog" width="420" />
 
 # BetaLog ðŸ§—
 

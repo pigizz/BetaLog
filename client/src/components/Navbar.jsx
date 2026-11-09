@@ -1,21 +1,18 @@
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import Topo from './Topo'
 
 export default function Navbar({ email }) {
   return (
-    <header className="relative overflow-hidden bg-moss-dark text-lichen">
-      <Topo className="absolute inset-0 h-full w-full text-tea opacity-60" />
-      <div className="relative mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
-        <Link to="/" className="flex items-center gap-2.5 font-wide text-xl">
-          <img src="/favicon.svg" alt="" className="h-8 w-8 ring-1 ring-tea/40 rounded-[8px]" />
-          BetaLog
+    <header className="border-b-4 border-moss bg-[#F6F7EB]">
+      <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
+        <Link to="/" aria-label="BetaLog home">
+          <img src="/logo.png" alt="BetaLog" className="h-11 w-auto sm:h-12" />
         </Link>
         <div className="flex items-center gap-4 text-sm">
-          <span className="hidden text-lichen/75 sm:inline">{email}</span>
+          <span className="hidden text-rock/70 sm:inline">{email}</span>
           <button
             onClick={() => supabase.auth.signOut()}
-            className="rounded-lg border border-lichen/30 px-3 py-1.5 font-medium transition-colors hover:bg-lichen hover:text-moss-dark"
+            className="rounded-lg border-2 border-rock/15 px-3 py-1.5 font-semibold transition-colors hover:border-moss hover:text-moss"
           >
             Log out
           </button>
