@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/* BetaLog colour palette */
+@theme {
+  --color-chalk: #F7F5F0;     /* page background */
+  --color-rock: #544B3D;      /* text and headings */
+  --color-moss: #4E6E58;      /* primary: buttons, links, brand */
+  --color-moss-dark: #3F5A48; /* primary hover */
+  --color-tea: #C7D59F;       /* highlights, sent badges */
+  --color-lavender: #9993B2;  /* secondary accents, chart data */
+  --color-rust: #B5543C;      /* errors, delete */
+}
+
+body {
+  @apply bg-chalk text-rock antialiased;
+}
