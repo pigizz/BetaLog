@@ -20,16 +20,21 @@ export default function App() {
 
   if (loading) return <p className="p-6 text-rock/70">Loadingâ€¦</p>
 
+  // Pages shown to logged-in users get the navbar and a centred content area
+  const withLayout = (page) => (
+    <>
+      <Navbar email={session.user.email} />
+      <main className="mx-auto max-w-5xl px-5 py-10">{page}</main>
+    </>
+  )
+
   return (
     <BrowserRouter>
-      {session && <Navbar email={session.user.email} />}
-      <main className="mx-auto max-w-2xl px-4 py-6">
-        <Routes>
-          <Route path="/login" element={session ? <Navigate to="/" /> : <Login />} />
-          <Route path="/" element={session ? <Sessions /> : <Navigate to="/login" />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path="/login" element={session ? <Navigate to="/" /> : <Login />} />
+        <Route path="/" element={session ? withLayout(<Sessions />) : <Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </BrowserRouter>
   )
 }
