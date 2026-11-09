@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { api } from '../lib/api'
+import { summarise } from '../lib/climbing'
 import SessionForm from '../components/SessionForm'
 import EnergyHolds from '../components/EnergyHolds'
 
@@ -16,6 +18,7 @@ export default function Sessions() {
   const [sessions, setSessions] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     api.getSessions()
@@ -26,7 +29,7 @@ export default function Sessions() {
 
   async function handleCreate(session) {
     const created = await api.createSession(session)
-    setSessions((prev) => [created, ...prev])
+    navigate(`/sessions/${created.id}`)
   }
 
   async function handleDelete(id) {
@@ -74,6 +77,7 @@ export default function Sessions() {
         <ol>
           {sessions.map((s) => {
             const { day, month, weekday } = formatDate(s.session_date)
+            const { total, sent, hardest } = summarise(s.climbs)
             return (
               <li key={s.id} className="group grid grid-cols-[4.5rem_1fr] gap-5 border-b border-rock/15 py-5">
                 <div className="flex h-[4.5rem] flex-col items-center justify-center self-start rounded-xl bg-moss-dark text-lichen">
@@ -84,7 +88,11 @@ export default function Sessions() {
                 <div className="min-w-0">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="text-lg font-bold">{s.gym}</h3>
+                      <h3 className="text-lg font-bold">
+                        <Link to={`/sessions/${s.id}`} className="decoration-tea decoration-2 underline-offset-4 hover:underline">
+                          {s.gym}
+                        </Link>
+                      </h3>
                       <p className="text-sm text-rock/70">{weekday}</p>
                     </div>
                     <button
@@ -100,6 +108,9 @@ export default function Sessions() {
                       <span className="rounded-full bg-tea px-3 py-0.5 font-semibold">{s.duration_min} min</span>
                     )}
                     {s.energy_level && <EnergyHolds value={s.energy_level} size="sm" />}
+                    <Link to={`/sessions/${s.id}`} className="font-semibold text-moss hover:underline">
+                      {total === 0 ? 'Add climbs' : `${sent} of ${total} sent${hardest ? `, hardest ${hardest}` : ''}`}
+                    </Link>
                   </div>
 
                   {s.notes && <p className="mt-3 max-w-prose leading-relaxed text-rock/90">{s.notes}</p>}

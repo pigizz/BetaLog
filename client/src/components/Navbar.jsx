@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import Topo from './Topo'
 
@@ -6,10 +7,10 @@ export default function Navbar({ email }) {
     <header className="relative overflow-hidden bg-moss-dark text-lichen">
       <Topo className="absolute inset-0 h-full w-full text-tea opacity-60" />
       <div className="relative mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
-        <p className="flex items-center gap-2.5 font-wide text-xl">
+        <Link to="/" className="flex items-center gap-2.5 font-wide text-xl">
           <img src="/favicon.svg" alt="" className="h-8 w-8 ring-1 ring-tea/40 rounded-[8px]" />
           BetaLog
-        </p>
+        </Link>
         <div className="flex items-center gap-4 text-sm">
           <span className="hidden text-lichen/75 sm:inline">{email}</span>
           <button

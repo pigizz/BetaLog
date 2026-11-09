@@ -25,5 +25,11 @@ async function request(path, options = {}) {
 export const api = {
   getSessions: () => request('/api/sessions'),
   createSession: (session) => request('/api/sessions', { method: 'POST', body: JSON.stringify(session) }),
+  getSession: (id) => request(`/api/sessions/${id}`),
   deleteSession: (id) => request(`/api/sessions/${id}`, { method: 'DELETE' }),
+
+  getClimbs: (sessionId) => request(`/api/sessions/${sessionId}/climbs`),
+  createClimb: (sessionId, climb) =>
+    request(`/api/sessions/${sessionId}/climbs`, { method: 'POST', body: JSON.stringify(climb) }),
+  deleteClimb: (id) => request(`/api/climbs/${id}`, { method: 'DELETE' }),
 }

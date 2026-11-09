@@ -1,5 +1,6 @@
 const express = require('express');
 const requireAuth = require('../middleware/auth');
+const { validateClimb, removeVideos } = require('./climbs');
 
 const router = express.Router();
 router.use(requireAuth);
@@ -17,11 +18,12 @@ function validateSession(body) {
   return errors;
 }
 
-// GET /api/sessions â€” list the user's sessions, newest first
+// GET /api/sessions â€” list the user's sessions, newest first,
+// with each session's climbs (grade and sent) for the logbook summary
 router.get('/', async (req, res) => {
   const { data, error } = await req.db
     .from('sessions')
-    .select('*')
+    .select('*, climbs(grade, sent)')
     .order('session_date', { ascending: false })
     .order('created_at', { ascending: false });
 
@@ -53,11 +55,69 @@ router.post('/', async (req, res) => {
   res.status(201).json(data);
 });
 
-// DELETE /api/sessions/:id â€” delete a session (and its climbs)
+// GET /api/sessions/:id â€” one session
+router.get('/:id', async (req, res) => {
+  const { data, error } = await req.db
+    .from('sessions')
+    .select('*')
+    .eq('id', req.params.id)
+    .maybeSingle();
+
+  if (error) return res.status(500).json({ error: error.message });
+  if (!data) return res.status(404).json({ error: 'Session not found' });
+  res.json(data);
+});
+
+// DELETE /api/sessions/:id â€” delete a session, its climbs and their videos
 router.delete('/:id', async (req, res) => {
+  const { data: climbs } = await req.db
+    .from('climbs')
+    .select('video_path')
+    .eq('session_id', req.params.id);
+
   const { error } = await req.db.from('sessions').delete().eq('id', req.params.id);
   if (error) return res.status(500).json({ error: error.message });
+
+  await removeVideos(req.db, (climbs || []).map((c) => c.video_path));
   res.status(204).end();
+});
+
+// GET /api/sessions/:id/climbs â€” climbs logged in a session, oldest first
+router.get('/:id/climbs', async (req, res) => {
+  const { data, error } = await req.db
+    .from('climbs')
+    .select('*')
+    .eq('session_id', req.params.id)
+    .order('created_at', { ascending: true });
+
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
+});
+
+// POST /api/sessions/:id/climbs â€” log a climb in a session
+router.post('/:id/climbs', async (req, res) => {
+  const errors = validateClimb(req.body, req.user.id);
+  if (errors.length) return res.status(400).json({ errors });
+
+  const { grade, style, attempts, sent, notes, video_path } = req.body;
+
+  const { data, error } = await req.db
+    .from('climbs')
+    .insert({
+      session_id: req.params.id,
+      user_id: req.user.id,
+      grade,
+      style: style || null,
+      attempts: attempts ? Number(attempts) : 1,
+      sent: Boolean(sent),
+      notes: notes || null,
+      video_path: video_path || null,
+    })
+    .select()
+    .single();
+
+  if (error) return res.status(500).json({ error: error.message });
+  res.status(201).json(data);
 });
 
 module.exports = router;

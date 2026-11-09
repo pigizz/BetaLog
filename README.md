@@ -1,12 +1,12 @@
 ![BetaLog](logo/betalog-logo.svg)
 
-# BetaLog 🧗
+# BetaLog ðŸ§—
 
 **A climbing journal that tracks your progress and uses AI to analyse your climbing videos.**
 
 BetaLog lets climbers log their sessions, track grade progression over time, and get AI-powered feedback on their climbs from uploaded videos.
 
-> 🚧 **Status:** In development
+> ðŸš§ **Status:** In development
 
 ---
 
@@ -26,8 +26,8 @@ Most climbers track progress in their heads, scattered phone notes, or not at al
 
 ### Journal
 - [x] Log sessions (date, gym, duration, energy level)
-- [ ] Log climbs per session (grade, style, attempts, sent or not)
-- [ ] Add personal notes to each climb
+- [x] Log climbs per session (grade, style, attempts, sent or not)
+- [x] Add personal notes to each climb
 - [ ] Browse and filter climbing history
 
 ### Progress Dashboard
@@ -37,7 +37,7 @@ Most climbers track progress in their heads, scattered phone notes, or not at al
 - [ ] Breakdown by climbing style
 
 ### AI Video Feedback
-- [ ] Upload a short clip of an attempt
+- [x] Upload a short clip of an attempt
 - [ ] Pose detection with skeleton overlay
 - [ ] AI-generated description of the attempt
 - [ ] Suggested areas for improvement
@@ -78,7 +78,7 @@ Progress is tracked on the [project board](#).
 - A free [Supabase](https://supabase.com) project
 
 ### 1. Database
-In your Supabase project, open **SQL Editor** and run `database/schema.sql`.
+In your Supabase project, open **SQL Editor** and run `database/schema.sql`. This creates the tables and a private `climb-videos` storage bucket.
 
 ### 2. Backend
 ```bash
@@ -104,10 +104,10 @@ cd server && npm test
 ## Project Structure
 ```
 betalog/
-├── client/      React + Vite frontend
-├── server/      Express API
-├── database/    SQL schema
-└── logo/        Logo files
+â”œâ”€â”€ client/      React + Vite frontend
+â”œâ”€â”€ server/      Express API
+â”œâ”€â”€ database/    SQL schema
+â””â”€â”€ logo/        Logo files
 ```
 
 ---
